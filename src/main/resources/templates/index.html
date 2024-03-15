@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/base.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <title>2017948072 이재홍</title>
+</head>
+<body>
+<div class="text-center">
+    <a href="/" style="text-decoration:none;">
+        <img th:src="@{/images/P4.jpg}" class="img-rounded"
+             style="display:inline-block;height:100%;margin-right:5px"/>
+        <span class="h2">SpringBoot를 이용한 간단한 Board만들기 Project</span>
+    </a>
+</div>
+
+<div class="container">
+    <div class="page-header">
+        <h1>Basic 목록</h1>
+    </div>
+    <div class="pull-right" style="width:100px;margin:10px 0;">
+        <a href="#" th:href="@{/basic/new}" class="btn btn-primary btn-block">인원 등록</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>이름</th>
+            <th>직책</th>
+            <th>이메일</th>
+            <th>연락처</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="basic : ${basicList}">
+            <td th:text="${basic.idx}"></td>
+            <td><a href="#" th:href="@{'/basic/' + ${basic.idx}}" th:text="${basic.name}"></a></td>
+            <td th:text="${basic.label}"></td>
+            <td th:text="${basic.email}"></td>
+            <td th:text="${basic.phone}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<div class="container">-->
+<!--<nav aria-label="Page navigation" style="text-align:center;">-->
+<!--<ul class="pagination justify-content-center"-->
+<!--th:with="startNumber=${T(Math).floor(basicList.number/10)}*10+1, endNumber=(${basicList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${basicList.totalPages}">-->
+<!--<li class="page-item"><a class="page-link" aria-label="Previous" href="/?page=1">&laquo;</a></li>-->
+<!--<li class="page-item" th:style="${basicList.first} ? 'display:none'">-->
+<!--<a class="page-link" th:href="@{/(page=${basicList.number})}">&lsaquo;</a>-->
+<!--</li>-->
+
+<!--<li class="page-item" th:each="page :${#numbers.sequence(startNumber, endNumber)}"-->
+<!--th:class="(${page} == ${basicList.number}+1) ? 'active'">-->
+<!--<a class="page-link" th:href="@{/(page=${page})}" th:text="${page}"><span class="sr-only"></span></a>-->
+<!--</li>-->
+
+<!--<li class="page-item" th:style="${basicList.last} ? 'display:none'">-->
+<!--<a class="page-link" th:href="@{/(page=${basicList.number}+2)}">&rsaquo;</a>-->
+<!--</li>-->
+<!--<li class="page-item"><a class="page-link" aria-label="Next" th:href="@{/(page=${basicList.totalPages})}">&raquo;</a></li>-->
+<!--</ul>-->
+<!--</nav>-->
+<!--</div>-->
+
+<div class="container">
+    <div class="page-header">
+        <h1>Profile 목록</h1>
+    </div>
+    <div class="pull-right" style="width:120px;margin:10px 0;">
+        <a href="#" th:href="@{/profile/new}" class="btn btn-primary btn-block">프로필 등록</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>SNS</th>
+            <th>ID</th>
+            <th>링크</th>
+            <th>등록시간</th>
+            <th>수정시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="profile : ${profileList}">
+            <td th:text="${profile.idx}"></td>
+            <td><a href="#" th:href="@{'/profile/'+ ${profile.idx}}" th:text="${profile.network}"></a></td>
+            <td th:text="${profile.username}"></td>
+            <td th:text="${profile.url}"></td>
+            <td th:text="${profile.createdAt} ? ${#temporals.format(profile.createdAt,'yyyy-MM-dd HH:mm:ss')} : ${profile.createdAt}"></td>
+            <td th:text="${profile.updatedDate} ? ${#temporals.format(profile.updatedDate,'yyyy-MM-dd HH:mm:ss')} : ${profile.updatedDate}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!--<div class="container">-->
+<!--<nav aria-label="Page navigation" style="text-align:center;">-->
+<!--<ul class="pagination justify-content-center"-->
+<!--th:with="startNumber=${T(Math).floor(profileList.number/10)}*10+1, endNumber=(${profileList.totalPages} > ${startNumber}+9) ? ${startNumber}+9 : ${profileList.totalPages}">-->
+<!--<li class="page-item"><a class="page-link" aria-label="Previous" href="/?page=1">&laquo;</a></li>-->
+<!--<li class="page-item" th:style="${profileList.first} ? 'display:none'"><a class="page-link" th:href="@{/(page=${profileList.number})}">&lsaquo;</a></li>-->
+<!--<li class="page-item" th:each="page :${#numbers.sequence(startNumber, endNumber)}"th:class="(${page} == ${profileList.number}+1) ? 'active'"><a class="page-link" th:href="@{/(page=${page})}" th:text="${page}"><span class="sr-only"></span></a></li>-->
+<!--<li class="page-item" th:style="${profileList.last} ? 'display:none'"><a class="page-link" th:href="@{/(page=${profileList.number}+2)}">&rsaquo;</a></li>-->
+<!--<li class="page-item"><a class="page-link" aria-label="Next" th:href="@{/(page=${profileList.totalPages})}">&raquo;</a></li>-->
+<!--</ul>-->
+<!--</nav>-->
+<!--</div>-->
+
+
+</body>
+</html>

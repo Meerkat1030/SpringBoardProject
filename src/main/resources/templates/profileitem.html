@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{/css/base.css}"/>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <title>2017948072 이재홍</title></head>
+<body>
+<div class="text-center">
+    <a href="/" style="text-decoration:none;">
+        <img th:src="@{/images/P4.jpg}" class="img-rounded"
+             style="display:inline-block;height:100%;margin-right:5px"/>
+        <span class="h2">SpringBoot를 이용한 간단한 Board만들기 Project</span>
+    </a>
+</div>
+<div class="container">
+    <div class="page-header">
+        <h1>Profile 확인</h1>
+    </div>
+    <input id="profile_idx" type="hidden" th:value="${profile?.idx}">
+    <table class="table">
+        <tr>
+            <th style="padding:13px 0 0 15px;">SNS</th>
+            <td><input id="profile_network" type="text" class="form-control input-sm" th:value="${profile?.network}"/></td>
+        </tr>
+        <tr>
+            <th style="padding:13px 0 0 15px;">ID</th>
+            <td><input id="profile_username" type="text" class="form-control input-sm" th:value="${profile?.username}"/></td>
+        </tr>
+        <tr>
+            <th style="padding:13px 0 0 15px;">링크</th>
+            <td><input id="profile_url" type="text" class="form-control input-sm" th:value="${profile?.url}"/></td>
+        </tr>
+    </table>
+    <div class="pull-left">
+        <a href="/" class="btn btn-default">목록으로</a>
+    </div>
+    <div class="pull-right">
+        <button th:if="${profile?.idx}" type="button" class="btn btn-info" id="update">수정</button>
+        <button th:if="${profile?.idx}" type="button" class="btn btn-danger" id="delete">삭제</button>
+    </div>
+</div>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script th:if="${profile?.idx}">
+    $('#update').click(function () {
+
+        var jsonData = JSON.stringify({
+            network: $('#profile_network').val(),
+            username: $('#profile_username').val(),
+            url: $('#profile_url').val(),
+            createdAt: $('#profile_createdAt').val(),
+            updateDate: $('#profile_updateDate').val()
+        });
+
+        $.ajax({
+            url: "http://localhost:8080/profile/" + $('#profile_idx').val(),
+            type: "PUT",
+            data: jsonData,
+            contentType: "application/json",
+            dataType: "json",
+            success: function () {
+                swal({
+                    title: "수정  완료!!!!",
+                    text: "Profile을 수정하였습니다! 계속하기버튼을 누른후 목록으로 버튼을 눌러주세요!",
+                    icon: "success",
+                    button: "계속하기",
+                });
+            },
+            error: function () {
+                swal({
+                    title: "수정  실패....",
+                    text: "Profile을 수정 실패하였습니다! 다시시도해 주세요!",
+                    icon: "error",
+                    button: "계속하기",
+                });
+            }
+        });
+
+    });
+    $('#delete').click(function () {
+        $.ajax({
+            url: "http://localhost:8080/profile/" + $('#profile_idx').val(),
+            type: "DELETE",
+            success: function () {
+                swal('삭제 성공!');
+                location.href = '/';
+            },
+            error: function () {
+                swal('삭제 실패!');
+            }
+        });
+    });
+</script>
+</body>
+</html>
